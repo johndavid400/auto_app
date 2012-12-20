@@ -1,14 +1,12 @@
 AutoApp::Application.routes.draw do
-  resources :trims
 
+  get "home/index"
 
-  resources :models
-
-
-  resources :makes
-
-
+  root :to => 'home#index'
   devise_for :users
+  resources :trims
+  resources :models
+  resources :makes
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
