@@ -1,0 +1,23 @@
+<h1>Listing trims</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @trims.each do |trim| %>
+  <tr>
+    <td><%= trim.name %></td>
+    <td><%= link_to 'Show', trim %></td>
+    <td><%= link_to 'Edit', edit_trim_path(trim) %></td>
+    <td><%= link_to 'Destroy', trim, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Trim', new_trim_path %>

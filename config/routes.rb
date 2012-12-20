@@ -1,4 +1,13 @@
 AutoApp::Application.routes.draw do
+  resources :trims
+
+
+  resources :models
+
+
+  resources :makes
+
+
   devise_for :users
 
   # The priority is based upon order of creation:
