@@ -1,14 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>AutoApp</title>
+  <title>All Autos</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
-<%= yield %>
+  <div class="container">
+
+    <center>
+      <% if alert %>
+        <p class="alert-message warning alert alert-error"><%= alert %></p>
+      <% end %>
+      <% if notice %>
+        <p class="alert-message info alert alert-success"><%= notice %></p>
+      <% end %>
+    </center>
+
+    <%= yield %>
+
+  </div>
 
 </body>
 </html>

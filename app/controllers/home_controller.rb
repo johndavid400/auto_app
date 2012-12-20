@@ -4,7 +4,7 @@ class HomeController < ApplicationController
   require 'crack/json'
 
   def index
-    get_vehicle_list
+    @makes = Make.all
   end
 
   def get_vehicle_list
