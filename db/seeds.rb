@@ -11,8 +11,8 @@ require 'crack'
 require 'crack/json'
 
 
+  ####  Check Edmunds for Makes
   if Make.all.empty?
-    seed db with makes and models
     base = "http://api.edmunds.com/v1/api"
     url = "/vehicle/makerepository/findall?fmt=json&api_key=#{ENV["EDMUNDS_VEHICLE"]}"
     base_url = base + url
@@ -26,6 +26,7 @@ require 'crack/json'
   end
 
 
+  ####  Go through each Make, populating each model and trim
   Make.all.each do |make|
     if make.models.empty?
       sleep 1
@@ -63,7 +64,33 @@ require 'crack/json'
         end
       end
     else
-      puts "Gooday mate"
+      puts "Already have models for: #{make.name}"
+    end
+  end
+
+  ####  Go through each trim and check for images
+  Trim.all.each do |trim|
+    if trim.images.empty?
+      begin
+        sleep 1.5
+        base = "http://api.edmunds.com/v1/api"
+        url = "/vehiclephoto/service/findphotosbystyleid?styleId=#{trim.style_id}&fmt=json&api_key=#{ENV["EDMUNDS_VEHICLE"]}"
+        base_url = base + url
+        image_base_url = "http://media.ed.edmunds-media.com"
+        resp = RestClient.get(base_url)
+        json = Crack::JSON.parse(resp)
+        json.each do |image_set|
+          image_face = image_set["photoSrcs"].select{|s| /\d{3}(.jpg|.png|.jpeg)/.match(s) }.first
+          image = image_base_url + image_face
+          trim.images.create link: image, description: image_set["captionTranscript"]
+          puts "Found images for: #{trim.model.make.name}: #{trim.model.name} : #{trim.name}"
+        end
+        puts Image.count
+      rescue
+        puts "Failed to load image for #{trim.name}"
+      end
+    else
+     puts "Already have images for: #{trim.model.make.name}: #{trim.model.name} : #{trim.name}"
     end
   end
 

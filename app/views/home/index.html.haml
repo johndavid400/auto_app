@@ -9,10 +9,11 @@
     %tr{:id => "make_models_#{make.id}"}
       %td
         - make.models.each do |model|
-          - if make.models.count == 1
+          .model
+            = image_tag(model.sample_image, size: "100x100")
+            %p
             = model.name
-          - else
-            = "#{model.name}, "
+            %p
       :javascript
         $(function() {
           $("#make_models_" + "#{make.id}").hide(); 
