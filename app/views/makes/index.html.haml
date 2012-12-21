@@ -1,4 +1,4 @@
-%h1 Cars
+%h1 All Autos: Makes
 %p
 %table.table.table-bordered.table-striped
   %tr
@@ -8,17 +8,19 @@
       %td= make.name
     %tr{:id => "make_models_#{make.id}"}
       %td
-        - make.models.each do |model|
-          .model
-            = image_tag(model.sample_image, size: "100x100")
-            %p
-            = model.name
-            %p
+        %span{:id => "#{make.id}_models"}
+
       :javascript
         $(function() {
           $("#make_models_" + "#{make.id}").hide(); 
           $("#make_" + "#{make.id}").click(function(){
-            $("#make_models_" + "#{make.id}").slideToggle(); 
+            document.getElementById("#{make.id}_models").innerHTML = "";
+            $("#make_models_" + "#{make.id}").toggle(); 
+            $.ajax({
+              type: 'GET',
+              dataType: 'script',
+              url: "/get_models?id=#{make.id}"
+            });
           });
         });
 

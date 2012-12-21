@@ -8,6 +8,9 @@ AutoApp::Application.routes.draw do
   resources :models
   resources :makes
 
+  get '/get_models' => "makes#get_models"
+  get '/get_trims' => "models#get_trims"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

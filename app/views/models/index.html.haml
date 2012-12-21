@@ -1,0 +1,27 @@
+%h1 All Autos: Models
+%p
+%table.table.table-bordered.table-striped
+  %tr
+    %th Model
+  - @models.each do |model|
+    %tr{:id => "model_#{model.id}"}
+      %td= model.name
+    %tr{:id => "model_trims_#{model.id}"}
+      %td
+        %span{:id => "#{model.id}_trims"}
+
+      :javascript
+        $(function() {
+          $("#model_trims_" + "#{model.id}").hide(); 
+          $("#model_" + "#{model.id}").click(function(){
+            document.getElementById("#{model.id}_trims").innerHTML = "";
+            $("#model_trims_" + "#{model.id}").toggle(); 
+            $.ajax({
+              type: 'GET',
+              dataType: 'script',
+              url: "/get_trims?id=#{model.id}"
+            });
+          });
+        });
+
+

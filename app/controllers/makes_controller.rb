@@ -80,4 +80,10 @@ class MakesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def get_models
+    @make_id = params[:id]
+    @models = Make.find(@make_id).models
+  end
+
 end

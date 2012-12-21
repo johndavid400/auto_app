@@ -2,6 +2,23 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+body{
+  margin-top: 20px;
+}
+
 .model{
   display: inline-block;
 }
+
+.inline {
+  display: inline-block;
+}
+
+.link{
+  @extend .inline;
+  padding: 10px 20px;
+  margin: 15px;
+}
+
+
+

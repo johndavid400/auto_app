@@ -2,7 +2,7 @@ class ModelsController < ApplicationController
   # GET /models
   # GET /models.json
   def index
-    @models = Model.all
+    @models = Model.order('name ASC')
 
     respond_to do |format|
       format.html # index.html.erb
@@ -80,4 +80,10 @@ class ModelsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def get_trims
+    @model_id = params[:id]
+    @trims = Model.find(@model_id).trims
+  end
+
 end
