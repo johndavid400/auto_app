@@ -11,13 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121220224134) do
+ActiveRecord::Schema.define(:version => 20121221152536) do
 
   create_table "makes", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
-    t.string   "edmunds_make_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "edmunds_id"
   end
 
   create_table "models", :force => true do |t|
@@ -25,13 +25,16 @@ ActiveRecord::Schema.define(:version => 20121220224134) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.integer  "make_id"
+    t.string   "edmunds_id"
   end
 
   create_table "trims", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
     t.integer  "model_id"
+    t.string   "style_id"
+    t.string   "submodel_id"
   end
 
   create_table "users", :force => true do |t|
