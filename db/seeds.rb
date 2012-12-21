@@ -55,7 +55,8 @@ require 'crack/json'
             trim = model["subModels"]["USED"]
           end
           trim.each do |submodel|
-            @model.trims.create name: submodel["name"], submodel_id: submodel["id"], style_id: submodel["styleIds"].first
+            sm_trim = @model.trims.create name: submodel["name"], submodel_id: submodel["id"], style_id: submodel["styleIds"].first
+            puts "#{sm_trim.model.make.name}: #{sm_trim.model.name} : #{sm_trim.name}"
           end
         rescue
           binding.pry
