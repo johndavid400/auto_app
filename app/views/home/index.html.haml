@@ -4,5 +4,21 @@
   %tr
     %th Make
   - @makes.each do |make|
-    %tr
+    %tr{:id => "make_#{make.id}"}
       %td= make.name
+    %tr{:id => "make_models_#{make.id}"}
+      %td
+        - make.models.each do |model|
+          - if make.models.count == 1
+            = model.name
+          - else
+            = "#{model.name}, "
+      :javascript
+        $(function() {
+          $("#make_models_" + "#{make.id}").hide(); 
+          $("#make_" + "#{make.id}").click(function(){
+            $("#make_models_" + "#{make.id}").slideToggle(); 
+          });
+        });
+
+
