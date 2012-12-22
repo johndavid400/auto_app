@@ -1,0 +1,13 @@
+%h1
+  = link_to @model.make.name, makes_path
+  >
+  = @model.name
+
+%hr
+
+.model
+  - @model.trims.each do |s|
+    = link_to image_tag(s.sample_image, size: "200x200"), trim_path(s)
+    %p
+    = s.name
+    %p

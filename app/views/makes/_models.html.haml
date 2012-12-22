@@ -1,6 +1,6 @@
 - models.each do |model|
   .model
-    = image_tag(model.sample_image, size: "100x100")
+    = link_to image_tag(model.sample_image, size: "100x100"), model_path(model)
     %p
     = model.name
     %p

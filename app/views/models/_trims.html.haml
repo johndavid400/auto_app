@@ -1,6 +1,6 @@
 - trims.each do |trim|
   .model
-    = image_tag(trim.sample_image, size: "100x100")
+    = link_to image_tag(trim.sample_image, size: "100x100"), trim_path(trim)
     %p
     = trim.name
     %p

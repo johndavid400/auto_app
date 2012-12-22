@@ -1,0 +1,15 @@
+%h1
+  = link_to @trim.model.make.name, makes_path
+  >
+  = link_to @trim.model.name, model_path(@trim.model)
+  >
+  = @trim.name
+
+%hr
+
+.model
+  - @trim.images.each do |s|
+    = image_tag(s.link, size: "200x200")
+    %p
+    = s.description
+    %p
