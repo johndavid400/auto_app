@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121221163023) do
+ActiveRecord::Schema.define(:version => 20121222144614) do
 
   create_table "images", :force => true do |t|
     t.string   "link"
@@ -36,13 +36,22 @@ ActiveRecord::Schema.define(:version => 20121221163023) do
     t.string   "edmunds_id"
   end
 
+  create_table "pg_search_documents", :force => true do |t|
+    t.text     "content"
+    t.integer  "searchable_id"
+    t.string   "searchable_type"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
   create_table "trims", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
     t.integer  "model_id"
     t.string   "style_id"
     t.string   "submodel_id"
+    t.string   "featured_image"
   end
 
   create_table "users", :force => true do |t|

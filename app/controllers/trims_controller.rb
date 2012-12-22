@@ -80,4 +80,15 @@ class TrimsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def feature_image
+    @image = Image.find(params[:image_id])
+    trim = @image.trim
+    trim.featured_image = @image.link
+    trim.save
+    flash[:notice] = "Image set as trim default"
+    redirect_to trim_path(trim)
+  end
+
+
 end

@@ -9,7 +9,7 @@
 
 .model
   - @trim.images.each do |s|
-    = image_tag(s.link, size: "200x200")
+    = link_to image_tag(s.link, size: "200x200"), feature_image_path(image_id: s)
     %p
     = s.description
     %p

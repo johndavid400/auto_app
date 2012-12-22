@@ -11,6 +11,8 @@ AutoApp::Application.routes.draw do
   get '/get_models' => "makes#get_models"
   get '/get_trims' => "models#get_trims"
 
+  match "feature_image" => "trims#feature_image"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
