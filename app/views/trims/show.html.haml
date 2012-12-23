@@ -1,15 +1,18 @@
 %h1
-  = link_to @trim.model.make.name, makes_path
-  >
+  = link_to "All Makes", makes_path
+  = ":"
+  = link_to @trim.model.make.name, make_path(@trim.model.make)
+  = ":"
   = link_to @trim.model.name, model_path(@trim.model)
-  >
+  = ":"
   = @trim.name
 
 %hr
 
-.model
-  - @trim.images.each do |s|
-    = link_to image_tag(s.link, size: "200x200"), feature_image_path(image_id: s)
-    %p
-    = s.description
-    %p
+- @trim.images.each do |s|
+  .model
+    %center
+      = link_to image_tag(s.link, size: "300x300"), feature_image_path(image_id: s)
+      %p
+      = s.description
+      %p

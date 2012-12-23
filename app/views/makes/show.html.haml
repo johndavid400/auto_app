@@ -1,0 +1,14 @@
+%h1
+  = link_to "All Makes", makes_path
+  = ":"
+  = @make.name
+
+%hr
+
+- @make.models.each do |s|
+  .model
+    %center
+      = link_to image_tag(s.sample_image, size: "300x300"), model_path(s)
+      %p
+      = s.name
+      %p

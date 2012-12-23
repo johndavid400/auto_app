@@ -6,12 +6,17 @@ body{
   margin-top: 20px;
 }
 
+.container{
+}
+
 .inline {
   display: inline-block;
 }
 
 .model{
   @extend .inline;
+  vertical-align: top;
+  width: 32.9%;
 }
 
 .link{
@@ -21,4 +26,12 @@ body{
 }
 
 
-
+img {
+  background:#FFFFFF;
+  padding:4px;
+  border:1px solid #777777;
+  margin-top:5px;
+  -moz-box-shadow:0px 0px 5px #666666;
+  -webkit-box-shadow:0px 0px 5px #666666;
+  box-shadow:0px 0px 5px #666666;
+}
