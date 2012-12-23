@@ -25,10 +25,9 @@ group :assets do
   gem 'faker'
   gem 'launchy'
   gem 'simplecov', :require => false, :group => :test
-
-  gem 'bootstrap-sass-rails'
 end
 
+gem 'bootstrap-sass-rails'
 gem 'jquery-rails'
 
 gem 'pry'
