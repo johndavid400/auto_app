@@ -13,6 +13,8 @@ AutoApp::Application.routes.draw do
 
   match "feature_image" => "trims#feature_image"
 
+  match "model_years" => "models#model_years"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

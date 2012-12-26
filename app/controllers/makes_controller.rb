@@ -1,10 +1,4 @@
 class MakesController < ApplicationController
-  before_filter :api
-
-  def api
-    @api = EdmundsAPI.new
-  end
-
   # GET /makes
   # GET /makes.json
   def index

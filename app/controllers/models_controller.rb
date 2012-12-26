@@ -86,4 +86,9 @@ class ModelsController < ApplicationController
     @trims = Model.find(@model_id).trims
   end
 
+  def model_years
+    @model_years = @api.get_model_years(params[:model])
+    @model = params[:name]
+  end
+
 end
