@@ -1,0 +1,12 @@
+%h1
+  = link_to "All Makes", makes_path
+
+%hr
+= link_to image_tag(@trims.first[:image], size: "300x300"), model_year_trims_path
+
+%h3.text-info Trims:
+
+- @trims.each do |s|
+  %h5
+    = link_to s[:name], trim_info_path(id: s[:style])
+  %p
