@@ -1,8 +1,14 @@
 class MakesController < ApplicationController
+  before_filter :api
+
+  def api
+    @api = EdmundsAPI.new
+  end
+
   # GET /makes
   # GET /makes.json
   def index
-    @makes = Make.all
+    @makes = @api.get_makes
 
     respond_to do |format|
       format.html # index.html.erb
@@ -82,8 +88,9 @@ class MakesController < ApplicationController
   end
 
   def get_models
+    @models = @api.get_models(params[:id], params[:new])
     @make_id = params[:id]
-    @models = Make.find(@make_id).models
+    params[:new] == "true" ? @msg = "Viewing New Models Only" : @msg = "Viewing All Models"
   end
 
 end
