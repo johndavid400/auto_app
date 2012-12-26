@@ -1,0 +1,10 @@
+%header.navbar.navbar-fixed-top.navbar-inverse
+  .navbar-inner
+    .container
+      = link_to "All Auto", root_path, id: "logo"
+      %nav
+        %ul.nav.pull-right
+          %li= link_to "Make", makes_path
+          %li= link_to "Model", models_path
+          %li= link_to "Year", '#' 
+

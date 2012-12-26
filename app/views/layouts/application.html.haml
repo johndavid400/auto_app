@@ -1,0 +1,15 @@
+%html
+  %head
+    %title All Autos
+    = stylesheet_link_tag    "application", :media => "all"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+  %body
+    .four.colums.centered
+      = render 'layouts/header'
+      %center
+        - if alert
+          %p.alert-message.warning.alert.alert-error= alert
+        - if notice
+          %p.alert-message.info.alert.alert-success= notice
+      = yield
