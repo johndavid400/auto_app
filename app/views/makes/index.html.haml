@@ -21,14 +21,21 @@
         $(function() {
           $("#make_models_" + "#{make[:id]}").hide(); 
           $("#make_" + "#{make[:id]}").click(function(){
-            document.getElementById("#{make[:id]}_models").innerHTML = "";
-            $("#make_models_" + "#{make[:id]}").toggle(); 
-            var val_new = document.getElementById("only_new").checked;
-            $.ajax({
-              type: 'GET',
-              dataType: 'script',
-              url: "/get_models?id=#{make[:id]}&new=" + val_new
-            });
+            //document.getElementById("#{make[:id]}_models").innerHTML = "";
+            if (document.getElementById("make_models_#{make[:id]}").style.display == "none"){
+              $("#make_models_#{make[:id]}").show(); 
+              if (document.getElementById("#{make[:id]}_models").childNodes.length < 1){
+                var val_new = document.getElementById("only_new").checked;
+                $.ajax({
+                  type: 'GET',
+                  dataType: 'script',
+                  url: "/get_models?id=#{make[:id]}&new=" + val_new
+                });
+              }
+            }
+            else {
+              $("#make_models_#{make[:id]}").hide(); 
+            }
           });
         });
 
