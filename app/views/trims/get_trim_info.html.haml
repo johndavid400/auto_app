@@ -22,9 +22,19 @@
     %a.carousel-control.left{"data-slide" => "prev", :href => "#myCarousel"} ‹
     %a.carousel-control.right{"data-slide" => "next", :href => "#myCarousel"} ›
 
-  %hr
+%hr
 
-  %h3.text-info Features and Specifications:
+%h3.text-info Pricing:
+
+%ul
+  - @trim.first["price"].each do |price|
+    %li
+      %h6
+        = price.first
+        = ":"
+        = number_to_currency(price.last)
+
+%h3.text-info Features and Specifications:
 
 - @trim.first["attributeGroups"].each do |attr_group|
   %h4= attr_group.last["name"].gsub(/_/," ")

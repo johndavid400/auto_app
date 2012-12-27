@@ -69,7 +69,7 @@ class EdmundsAPI
     @url = "/vehiclephoto/service/findphotosbystyleid?styleId=#{style_id}&fmt=json&api_key=#{@api_key}"
     call_api
     begin
-      image_face = @json.select{|s| s["subType"] == "exterior" && s["shotTypeAbbreviation"] == "FQ" }.first["photoSrcs"].first
+      image_face = @json.select{|s| s["subType"] == "exterior" && s["shotTypeAbbreviation"] == "FQ" }.first["photoSrcs"].select{|s| s.match(/\d{3}(.jpg)/) }.max
       @image = @image_base_url + image_face
     rescue
       @image = "http://client.amarablack.com/bandladder/sites/default/files/users/images/800px-No_Image_Wide.svg_.png"
