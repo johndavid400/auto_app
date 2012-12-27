@@ -83,7 +83,7 @@ class EdmundsAPI
     begin
       @images = []
       @json.each do |image|
-        link = @image_base_url + image["photoSrcs"].sample
+        link = @image_base_url + image["photoSrcs"].select{|s| s.match(/\d{3}(.jpg)/) }.max
         @images.push(link: link, caption: image["captionTranscript"], order: image["vdpOrder"])
       end
     rescue
