@@ -1,0 +1,39 @@
+.body_container
+  - @new_makes.each do |make|
+    .block
+      %h6.center= make["name"]
+      - make.each do |model|
+        = "foo"
+        %p
+
+:javascript
+  $(function() {
+    var hoverElem = null;
+    $('body').mousemove(function(e) {
+      hoverElem = e.target;
+    });
+
+    // This needs to be made a nicer jquery event, as a plugin, that's cross browser.  See http://stackoverflow.com/questions/7154967/jquery-detect-scrolldown
+    $(document).bind("mousewheel DOMMouseScroll",function(evt) {
+      var delta = evt.originalEvent.wheelDelta || -evt.originalEvent.detail;
+      // If my parent is one of the things, do normal stuff
+      // Otherwise, do custom stuff and stop event propagation
+      if($(hoverElem).hasClass("block") || $(hoverElem).parents(".block")[0]) {
+        console.log('normal');
+      } else {
+        var bc = $('.body_container');
+        var curScroll = bc.scrollLeft();
+        var scrollDelta = 150;
+        if(delta > 0 /* up */){
+          console.log('up');
+          bc.scrollLeft(curScroll - scrollDelta);
+        } else /* down */ {
+          console.log('down');
+          bc.scrollLeft(curScroll + scrollDelta);
+        }
+        evt.stopPropagation();
+        evt.preventDefault();
+        return false;
+      }
+    });
+  });

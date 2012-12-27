@@ -120,4 +120,16 @@ class EdmundsAPI
     return @json["styleHolder"]
   end
 
+  def get_new_makes
+    @url = "/vehicle/makerepository/findnewmakes?fmt=json&api_key=#{@api_key}"
+    call_api
+    return @json["makeHolder"]
+  end
+
+  def get_new_models(make_id)
+    @url = "/vehicle/modelrepository/findnewmodelsbymakeid?makeId=#{make_id}&fmt=json&api_key=#{@api_key}"
+    call_api
+    return @json["modelHolder"]
+  end
+
 end

@@ -1,0 +1,21 @@
+%hr
+= form_tag model_years_url, :id => "make_model_selector"  do
+  .inline#new_block= select_tag "new", options_for_select([["New", "1"], ["Used", "0"]]), :class => "small"
+  .inline#makes_block= select_tag "makes", options_for_select(@makes.map {|m| [m[:name], m[:id]] })
+  .inline#models_block
+  .hidden= submit_tag
+%hr
+
+:javascript
+  $(document).ready(function() {
+    $(".hidden").hide();
+    $("#makes").change(function(){
+      var makeId = document.getElementById("makes").value;
+      var new_used = document.getElementById("new").value;
+      $.ajax({
+        type: 'GET',
+        dataType: 'script',
+        url: "/autofill_models?id=" + makeId  + "&new=" + new_used
+      });
+    });
+  });

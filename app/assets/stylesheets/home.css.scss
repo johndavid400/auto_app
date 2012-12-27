@@ -4,6 +4,10 @@
 
 /* header */
 
+body,html{
+  margin-top: 50px;
+}
+
 #logo {
   float: left;
   margin-right: 10px;
@@ -20,10 +24,6 @@
   }
 }
 
-body{
-  margin-top: 50px;
-}
-
 .container{
 }
 
@@ -36,17 +36,6 @@ body{
 
 .inline {
   display: inline-block;
-}
-
-.model{
-  @extend .inline;
-  vertical-align: top;
-  width: 32.9%;
-}
-
-.model_sm{
-  @extend .inline;
-  vertical-align: top;
 }
 
 .link{
@@ -86,30 +75,45 @@ h2 {
   box-shadow:0px 0px 5px #666666;
 }
 
+.small {
+  width: 80px;
+}
+
 .model{
+  @extend .inline;
+  vertical-align: top;
+  width: 32.9%;
   img {
     @extend .imgshadow;
   }
 }
 
 .model_sm{
+  @extend .inline;
+  vertical-align: top;
   img {
     @extend .imgshadow;
   }
 }
 
-.carousel{
-  width: 600px;
+.body_container{
+  white-space:nowrap;
+  height:480px;
+  width:100%;
+  overflow:hidden;
+  overflow-x:scroll;
 }
 
-.carousel-inner{
-  width: 600px;
+.block{
+  display:inline-block;
+  width: 12%;
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  height: 400px;
+  overflow: hidden;
+  overflow-y: auto;
 }
 
-.carousel-caption{
-  color: white;
-}
 
-.small {
-  width: 80px;
-}
