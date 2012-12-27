@@ -14,6 +14,7 @@ AutoApp::Application.routes.draw do
   match "model_year_trims"         => "trims#get_trims"
   match "trim_info"                => "trims#get_trim_info"
   match "feature_image"            => "trims#feature_image"
+  match "autofill_models"          => "makes#autofill_models"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

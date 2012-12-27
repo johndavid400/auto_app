@@ -1,0 +1,7 @@
+= select_tag "model", options_for_select(models.map {|m| [m[:name], m[:id]] })
+:javascript
+  $(document).ready(function() {
+    $("#model").change(function(){
+      document.forms["make_model_selector"].submit();        
+    });
+  });

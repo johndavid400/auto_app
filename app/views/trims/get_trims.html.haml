@@ -1,5 +1,7 @@
-%h1
+%h3
   = link_to "All Makes", makes_path
+  = ":"
+  = @model
 
 %hr
 = link_to image_tag(@trims.first[:image], size: "300x300"), model_year_trims_path

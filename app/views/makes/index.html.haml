@@ -1,10 +1,13 @@
 %h1 All Autos: Makes
 %hr
 %p
-.inline= radio_button_tag "only", "new", true
-.inline= label_tag "New"
-.inline= radio_button_tag "only", "all", false
-.inline= label_tag "All"
+= form_tag model_years_url, :id => "make_model_selector"  do
+  .inline#new_block= select_tag "new", options_for_select([["New", "1"], ["Used", "0"]]), :class => "small"
+  .inline#makes_block= select_tag "makes", options_for_select(@makes.map {|m| [m[:name], m[:id]] })
+  .inline#models_block
+  .hidden= submit_tag
+  :javascript
+    $(".hidden").hide();
 %hr
 %p
 %table.table.table-bordered.table-striped
@@ -25,11 +28,11 @@
             if (document.getElementById("make_models_#{make[:id]}").style.display == "none"){
               $("#make_models_#{make[:id]}").show(); 
               if (document.getElementById("#{make[:id]}_models").childNodes.length < 1){
-                var val_new = document.getElementById("only_new").checked;
+                var new_used = document.getElementById("new").value;
                 $.ajax({
                   type: 'GET',
                   dataType: 'script',
-                  url: "/get_models?id=#{make[:id]}&new=" + val_new
+                  url: "/get_models?id=#{make[:id]}&new=" + new_used
                 });
               }
             }
@@ -38,5 +41,21 @@
             }
           });
         });
+
+:javascript
+  $(document).ready(function() {
+    $("#makes").change(function(){
+      var makeId = document.getElementById("makes").value;
+      var new_used = document.getElementById("new").value;
+      $.ajax({
+        type: 'GET',
+        dataType: 'script',
+        url: "/autofill_models?id=" + makeId  + "&new=" + new_used
+      });
+    });
+  });
+
+
+
 
 

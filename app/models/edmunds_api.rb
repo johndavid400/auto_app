@@ -31,38 +31,32 @@ class EdmundsAPI
     return @makes
   end
 
-  def get_models(make_id, new_models_only)
+  def get_models(make_id, new_models_only, image_true_false)
+    @image_true_false = image_true_false
     @make_id = make_id
     @url = "/vehicle/modelrepository/findbymakeid?makeid=#{@make_id}&fmt=json&api_key=#{@api_key}"
     call_api
     @models = []
-    models =  @json.first.last
-    models.each do |model|
+    if new_models_only == "1"
+      mdls = @json.first.last.select{|s| s["subModels"]["NEW"] }
+    else
+      mdls =  @json.first.last
+    end
+    mdls.each do |model|
       @model = model
-      if new_models_only == "true"
-        if model["subModels"]["NEW"].present?
-          @style_id = model["subModels"]["NEW"].first["styleIds"].first
-          add_model(@style_id)
-        end
-      else
-        if model["subModels"]["NEW"].present?
-          @style_id = model["subModels"]["NEW"].first["styleIds"].first
-        elsif model["subModels"]["PRE_PROD"].present?
-          @style_id = model["subModels"]["PRE_PROD"].first["styleIds"].first
-        elsif model["subModels"]["NEW_USED"].present?
-          @style_id = model["subModels"]["NEW_USED"].first["styleIds"].first
-        else
-          @style_id = model["subModels"]["USED"].first["styleIds"].first
-        end
-        add_model(@style_id)
-      end
+      @style_id = model["subModels"].first.last.first["styleIds"].first
+      add_model
     end
     return @models
   end
 
-  def add_model(style_id)
-    get_image(style_id)
-    @models.push(name: @model["name"], id: @model["id"], image: @image)
+  def add_model
+    if @image_true_false
+      get_image(@style_id)
+      @models.push(name: @model["name"], id: @model["id"], image: @image)
+    else
+      @models.push(name: @model["name"], id: @model["id"])
+    end
   end
 
   def get_image(style_id)
@@ -103,7 +97,7 @@ class EdmundsAPI
       @url = "/vehicle/stylerepository/findstylesbymodelyearid?modelyearid=#{@model_year}&fmt=json&api_key=#{@api_key}"
       call_api
       get_image(@json["styleHolder"].first["id"])
-      @model_years.push(year: model_year["year"], id: model_year["id"], image: @image)
+      @model_years.push(year: model_year["year"], id: model_year["id"], image: @image, name: "#{models.first["makeName"]} #{models.first["name"]}")
     end
     return @model_years
   end
@@ -115,7 +109,7 @@ class EdmundsAPI
     get_image(trims.sample["id"])
     @trims = []
     trims.each do |trim|
-      @trims.push(style: trim["id"], name: trim["attributeGroups"]["MAIN"]["attributes"]["NAME"]["value"], image: @image)
+      @trims.push(style: trim["id"], name: "#{trim["year"]} #{trim["attributeGroups"]["MAIN"]["attributes"]["NAME"]["value"]}", image: @image)
     end
     return @trims
   end
