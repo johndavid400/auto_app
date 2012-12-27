@@ -1,0 +1,56 @@
+%h4
+  = link_to "All Makes", makes_path
+  = ":"
+  = @trim.first["makeName"]
+  = ":"
+  = @trim.first["modelName"]
+  = ":"
+  = @trim_name
+
+%hr
+
+%center
+  %h3.text-info Image Gallery:
+  .carousel.slide#myCarousel
+    .carousel-inner
+      - @images.each do |s|
+        %div{:class => "item", :id => "#{s[:order]}"}
+          = image_tag(s[:link], size: "600x600")
+          .carousel-caption
+            = s[:caption]
+
+    %a.carousel-control.left{"data-slide" => "prev", :href => "#myCarousel"} ‹
+    %a.carousel-control.right{"data-slide" => "next", :href => "#myCarousel"} ›
+
+%hr
+
+%h3.text-info Pricing:
+
+%ul
+  - @trim.first["price"].each do |price|
+    %li
+      %h6
+        = price.first
+        = ":"
+        = number_to_currency(price.last)
+
+%h3.text-info Features and Specifications:
+
+- @trim.first["attributeGroups"].each do |attr_group|
+  %h4= attr_group.last["name"].gsub(/_/," ")
+  %p
+    - if attr_group.last["attributes"]
+      %ul
+        - attr_group.last["attributes"].each do |attr|
+          %li
+            %h6
+              = attr.last["name"].gsub(/_/," ")
+              = ":"
+              = attr.last["value"]
+
+
+
+:javascript
+  $(document).ready(function() {
+      $("#1").addClass("active");
+  })

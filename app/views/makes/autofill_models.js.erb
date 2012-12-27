@@ -1,0 +1,2 @@
+document.getElementById("models_block").innerHTML = "";
+$("#models_block").append('<%= escape_javascript(render 'shared/models_block', models: @models) %>');

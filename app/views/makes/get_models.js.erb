@@ -1,1 +1,1 @@
-$("#<%= @make_id %>_models").append('<%= escape_javascript(render 'models', models: @models) %>');
+$("#<%= @make_id %>_models").append('<%= escape_javascript(render 'models', models: @models, msg: @msg) %>');
