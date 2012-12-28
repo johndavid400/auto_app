@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121222144614) do
+ActiveRecord::Schema.define(:version => 20121228160639) do
 
   create_table "images", :force => true do |t|
     t.string   "link"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(:version => 20121222144614) do
     t.integer  "trim_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.integer  "model_id"
   end
 
   create_table "makes", :force => true do |t|
@@ -26,6 +27,14 @@ ActiveRecord::Schema.define(:version => 20121222144614) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.string   "edmunds_id"
+  end
+
+  create_table "model_years", :force => true do |t|
+    t.string   "year"
+    t.string   "edmunds_id"
+    t.integer  "model_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "models", :force => true do |t|

@@ -1,9 +1,9 @@
 .body_container
-  - @makes.each do |make|
+  - @new_makes.each do |make|
     .block
-      %h6.center= make["name"]
-      - make.models.each do |model|
-        = image_tag(model.sample_image, size: "200x200") 
+      %h6.center= make.name
+      - new_model_search(make.edmunds_id).each do |model|
+        = link_to image_tag(model.sample_image, size: "200x200"), model_years_path(model: model[:edmunds_id], name: model[:name])
         %p
         = model.name
         %p

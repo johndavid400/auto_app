@@ -21,42 +21,43 @@ class EdmundsAPI
   end
 
   def get_makes
+    Make.first.name
+    return Make.all.select{|s| s.newest_model_year >= Time.now.year.to_s }
+  rescue
     @url = "/vehicle/makerepository/findall?fmt=json&api_key=#{@api_key}"
     call_api
     @makes = []
     manufacturers =  @json.first.last
     manufacturers.each do |make|
-      @makes.push(name: make["name"], id: make["id"])
+      Make.create(name: make["name"], edmunds_id: make["id"])
     end
-    return @makes
+    return Make.all.select{|s| s.newest_model_year >= "2012"}
   end
 
-  def get_models(make_id, new_models_only, image_true_false)
-    @image_true_false = image_true_false
-    @make_id = make_id
-    @url = "/vehicle/modelrepository/findbymakeid?makeid=#{@make_id}&fmt=json&api_key=#{@api_key}"
+  def new_models(make_id)
+    @make = Make.find_by_edmunds_id(make_id)
+    return @make.models.select{|s| s.model_years.map{|s| s.year }.max >= Time.now.year.to_s if s.model_years.present? }
+  end
+
+  def get_models(make_id)
+    @make = Make.find_by_edmunds_id(make_id)
+    @make.models.first.name
+    return @make.models
+  rescue
+    @url = "/vehicle/modelrepository/findbymakeid?makeid=#{@make.edmunds_id}&fmt=json&api_key=#{@api_key}"
     call_api
     @models = []
-    if new_models_only == "1"
-      mdls = @json.first.last.select{|s| s["subModels"]["NEW"] }
-    else
-      mdls =  @json.first.last
-    end
+    mdls =  @json.first.last
     mdls.each do |model|
-      @model = model
-      @style_id = model["subModels"].first.last.first["styleIds"].first
-      add_model
+      @model = @make.models.create(name: model["name"], edmunds_id: model["id"])
+      style_id = model["subModels"].first.last.first["styleIds"].max
+      get_image(style_id)
+      Image.create(link: @image, model_id: @model.id)
+      model["modelYears"].each do |submodel|
+        @model.model_years.create(year: submodel["year"], edmunds_id: submodel["id"])
+      end
     end
-    return @models
-  end
-
-  def add_model
-    if @image_true_false
-      get_image(@style_id)
-      @models.push(name: @model["name"], id: @model["id"], image: @image)
-    else
-      @models.push(name: @model["name"], id: @model["id"])
-    end
+    return @make.models
   end
 
   def get_image(style_id)

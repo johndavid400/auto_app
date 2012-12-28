@@ -114,13 +114,17 @@ h2 {
 }
 
 .block{
+  img {
+    @extend .imgshadow;
+  }
+  vertical-align: top;
   display:inline-block;
   width: 225px;
   padding: 10px;
   margin: 10px;
   border: 1px solid gray;
   border-radius: 5px;
-  height: 90%;
+  max-height: 90%;
   overflow: hidden;
   overflow-y: auto;
 }

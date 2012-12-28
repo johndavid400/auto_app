@@ -1,4 +1,4 @@
-= select_tag "model", options_for_select(models.map {|m| [m[:name], m[:id]] })
+= select_tag "model", options_from_collection_for_select(@models, :edmunds_id, :name)
 :javascript
   $(document).ready(function() {
     $("#model").change(function(){
