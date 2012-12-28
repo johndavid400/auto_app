@@ -1,7 +1,9 @@
+= render 'shared/model_selector'
+
 .body_container
   - @new_makes.each do |make|
     .block
-      %h6.center= make.name
+      %h5.center.text-info= make.name
       - new_model_search(make.edmunds_id).each do |model|
         = link_to image_tag(model.sample_image, size: "200x200"), model_years_path(model: model[:edmunds_id], name: model[:name])
         %p

@@ -3,7 +3,11 @@ class MakesController < ApplicationController
   def index
     @new_makes = @api.get_makes
     @makes = Make.all
-    @models = [{:name => "please select a make"}, {:id => "0"}]
+    if params["preference"] == "list"
+      render 'list_view'
+    else
+      render 'block_view'
+    end
   end
 
   def show
@@ -11,8 +15,8 @@ class MakesController < ApplicationController
   end
 
   def get_models
-    @models = @api.get_models(params[:id], params[:new], true)
-    @make_id = params[:id]
+    @models = @api.get_models(params[:edmunds_id])
+    @make_id = params[:edmunds_id]
     params[:new] == "true" ? @msg = "Viewing New Models Only" : @msg = "Viewing All Models"
   end
 

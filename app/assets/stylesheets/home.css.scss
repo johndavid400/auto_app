@@ -107,7 +107,7 @@ h2 {
 
 .body_container{
   white-space:nowrap;
-  height:480px;
+  height:90%;
   width:100%;
   overflow:hidden;
   overflow-x:scroll;
@@ -129,4 +129,6 @@ h2 {
   overflow-y: auto;
 }
 
-
+.selector{
+  margin: 10px;
+}

@@ -1,0 +1,33 @@
+= render 'shared/model_selector'
+
+%table.table.table-bordered.table-striped
+  %tr
+    %th Make
+  - @makes.each do |make|
+    %tr{:id => "make_#{make[:edmunds_id]}"}
+      %td= make[:name]
+    %tr{:id => "make_models_#{make[:edmunds_id]}"}
+      %td
+        %span{:id => "#{make[:edmunds_id]}_models"}
+
+      :javascript
+        $(function() {
+          $("#make_models_" + "#{make[:edmunds_id]}").hide(); 
+          $("#make_" + "#{make[:edmunds_id]}").click(function(){
+            //document.getElementById("#{make[:id]}_models").innerHTML = "";
+            if (document.getElementById("make_models_#{make[:edmunds_id]}").style.display == "none"){
+              $("#make_models_#{make[:edmunds_id]}").show(); 
+              if (document.getElementById("#{make[:edmunds_id]}_models").childNodes.length < 1){
+                var new_used = document.getElementById("new").value;
+                $.ajax({
+                  type: 'GET',
+                  dataType: 'script',
+                  url: "/get_models?edmunds_id=#{make[:edmunds_id]}"
+                });
+              }
+            }
+            else {
+              $("#make_models_#{make[:edmunds_id]}").hide(); 
+            }
+          });
+        });

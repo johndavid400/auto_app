@@ -22,7 +22,7 @@ class EdmundsAPI
 
   def get_makes
     Make.first.name
-    return Make.all.select{|s| s.newest_model_year >= Time.now.year.to_s }
+    return Make.all.select{|s| s.newest_model_year >= Time.now.year.to_s }.sort{|a,b| a.name <=> b.name }
   rescue
     @url = "/vehicle/makerepository/findall?fmt=json&api_key=#{@api_key}"
     call_api
@@ -31,18 +31,18 @@ class EdmundsAPI
     manufacturers.each do |make|
       Make.create(name: make["name"], edmunds_id: make["id"])
     end
-    return Make.all.select{|s| s.newest_model_year >= "2012"}
+    return Make.all.select{|s| s.newest_model_year >= "2012"}.sort{|a,b| a.name <=> b.name }
   end
 
   def new_models(make_id)
     @make = Make.find_by_edmunds_id(make_id)
-    return @make.models.select{|s| s.model_years.map{|s| s.year }.max >= Time.now.year.to_s if s.model_years.present? }
+    return @make.models.select{|s| s.model_years.map{|s| s.year }.max >= Time.now.year.to_s if s.model_years.present? }.sort{|a,b| a.name <=> b.name }
   end
 
   def get_models(make_id)
     @make = Make.find_by_edmunds_id(make_id)
     @make.models.first.name
-    return @make.models
+    return @make.models.sort{|a,b| a.name <=> b.name }
   rescue
     @url = "/vehicle/modelrepository/findbymakeid?makeid=#{@make.edmunds_id}&fmt=json&api_key=#{@api_key}"
     call_api
@@ -57,7 +57,7 @@ class EdmundsAPI
         @model.model_years.create(year: submodel["year"], edmunds_id: submodel["id"])
       end
     end
-    return @make.models
+    return @make.models.sort{|a,b| a.name <=> b.name }
   end
 
   def get_image(style_id)
@@ -100,7 +100,7 @@ class EdmundsAPI
       get_image(@json["styleHolder"].first["id"])
       @model_years.push(year: model_year["year"], id: model_year["id"], image: @image, name: "#{models.first["makeName"]} #{models.first["name"]}")
     end
-    return @model_years
+    return @model_years.sort{|a,b| b[:year] <=> a[:year] }
   end
 
   def get_trims(model_year_id)
