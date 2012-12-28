@@ -44,6 +44,15 @@ body,html{
   margin: 15px;
 }
 
+
+tr.shaded {
+  background-color: #1A1A1A;
+  h4{
+    color: white;
+  }
+}
+
+
 /* typography */
 
 h1, h2, h3, h4, h5 {

@@ -22,31 +22,40 @@
     %a.carousel-control.left{"data-slide" => "prev", :href => "#myCarousel"} ‹
     %a.carousel-control.right{"data-slide" => "next", :href => "#myCarousel"} ›
 
-%hr
 
-%h3.text-info Pricing:
 
-%ul
+%table.table.table-bordered
+  %tr.shaded
+    %th{:colspan => 2}
+      %h4 Pricing:
   - @trim.first["price"].each do |price|
-    %li
-      %h6
-        = price.first
-        = ":"
-        = number_to_currency(price.last)
+    %tr
+      %td
+        %h6
+          = price.first
+      %td
+        - if price.last
+          = number_to_currency(price.last)
+        - else
+          = "n/a"
 
-%h3.text-info Features and Specifications:
-
-- @trim.first["attributeGroups"].each do |attr_group|
-  %h4= attr_group.last["name"].gsub(/_/," ")
-  %p
+%table.table.table-bordered
+  - @trim.first["attributeGroups"].each do |attr_group|
+    %tr.shaded
+      %th{:colspan => 2}
+        %h4= attr_group.last["name"].gsub(/_/," ")
     - if attr_group.last["attributes"]
-      %ul
+      %tr
         - attr_group.last["attributes"].each do |attr|
-          %li
-            %h6
-              = attr.last["name"].gsub(/_/," ")
-              = ":"
-              = attr.last["value"]
+          %tr
+            %td
+              %h6
+                = attr.last["name"].gsub(/_/," ")
+            %td
+              - if attr.last["value"]
+                = attr.last["value"]
+              - else
+                = "n/a"
 
 
 
