@@ -1,9 +1,10 @@
 class MakesController < ApplicationController
 
   def index
-    @makes = @api.get_makes
+#    @makes = @api.get_makes
+    @makes = Make.all
     @models = [{:name => "please select a make"}, {:id => "0"}]
-    @new_makes = @api.get_new_makes
+#    @new_makes = @api.get_new_makes
 
     respond_to do |format|
       format.html # index.html.erb

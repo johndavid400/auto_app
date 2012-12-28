@@ -1,9 +1,11 @@
 .body_container
-  - @new_makes.each do |make|
+  - @makes.each do |make|
     .block
       %h6.center= make["name"]
-      - make.each do |model|
-        = "foo"
+      - make.models.each do |model|
+        = image_tag(model.sample_image, size: "200x200") 
+        %p
+        = model.name
         %p
 
 :javascript
