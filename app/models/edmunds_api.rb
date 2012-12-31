@@ -39,6 +39,7 @@ class EdmundsAPI
     end
     return Make.all.select{|s| s.newest_model_year >= "2012"}.sort{|a,b| a.name <=> b.name }
   rescue
+    puts Make.last.name
     return Make.all.select{|s| s.newest_model_year >= "2012"}.sort{|a,b| a.name <=> b.name }
   end
 
