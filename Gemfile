@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.9'
 gem 'pg'
 gem 'pg_search'
+gem 'heroku'
 
 # API related gems
 gem 'rest-client'
