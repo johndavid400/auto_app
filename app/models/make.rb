@@ -4,9 +4,10 @@ class Make < ActiveRecord::Base
   has_many :models
 
   def newest_model_year
+    models.first.name
     models.collect{|s| s.model_years.map{|s| s.year }.max }.max
   rescue
-    "n/a"
+    "1900"
   end
 
 end

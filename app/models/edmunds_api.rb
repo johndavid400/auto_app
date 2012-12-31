@@ -21,16 +21,24 @@ class EdmundsAPI
   end
 
   def get_makes
-    Make.first.name
-    return Make.all.select{|s| s.newest_model_year >= Time.now.year.to_s }.sort{|a,b| a.name <=> b.name }
-  rescue
     @url = "/vehicle/makerepository/findall?fmt=json&api_key=#{@api_key}"
     call_api
     @makes = []
     manufacturers =  @json.first.last
     manufacturers.each do |make|
-      Make.create(name: make["name"], edmunds_id: make["id"])
+      unless Make.find_by_name(make["name"])
+        Make.create(name: make["name"], edmunds_id: make["id"])
+      end
     end
+    missing_models =  Make.all.select{|s| s.models.empty? }
+    if missing_models.present?
+      missing_models.each do |make|
+        get_models(make.edmunds_id)
+        sleep(0.5)
+      end
+    end
+    return Make.all.select{|s| s.newest_model_year >= "2012"}.sort{|a,b| a.name <=> b.name }
+  rescue
     return Make.all.select{|s| s.newest_model_year >= "2012"}.sort{|a,b| a.name <=> b.name }
   end
 
