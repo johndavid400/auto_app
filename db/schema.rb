@@ -11,7 +11,12 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121228160639) do
+ActiveRecord::Schema.define(:version => 20130101220658) do
+
+  create_table "api_calls", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "images", :force => true do |t|
     t.string   "link"
@@ -35,6 +40,7 @@ ActiveRecord::Schema.define(:version => 20121228160639) do
     t.integer  "model_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "image"
   end
 
   create_table "models", :force => true do |t|

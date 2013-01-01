@@ -1,6 +1,8 @@
 class Trim < ActiveRecord::Base
   attr_accessible :name, :style_id, :submodel_id, :featured_image
 
+  validates_uniqueness_of :style_id, :name
+
   belongs_to :model
   has_many :images
 

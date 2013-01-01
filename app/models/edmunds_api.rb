@@ -1,4 +1,5 @@
-class EdmundsAPI
+class EdmundsApi < ActiveRecord::Base
+
   # Using this model requires setting your Edmunds API key in your ~/.bashrc file like so:
   # export EDMUNDS_VEHICLE="your_api_key_here"
 
@@ -15,6 +16,7 @@ class EdmundsAPI
   end
 
   def call_api
+    ApiCall.create()
     @base_url = @base + @url
     @resp = RestClient.get(@base_url)
     @json = Crack::JSON.parse(@resp)
@@ -37,10 +39,9 @@ class EdmundsAPI
         sleep(0.5)
       end
     end
-    return Make.all.select{|s| s.newest_model_year >= "2012"}.sort{|a,b| a.name <=> b.name }
+    return Make.all.sort{|a,b| a.name <=> b.name }
   rescue
-    puts Make.last.name
-    return Make.all.select{|s| s.newest_model_year >= "2012"}.sort{|a,b| a.name <=> b.name }
+    return Make.all.sort{|a,b| a.name <=> b.name }
   end
 
   def new_models(make_id)
@@ -58,12 +59,14 @@ class EdmundsAPI
     @models = []
     mdls =  @json.first.last
     mdls.each do |model|
-      @model = @make.models.create(name: model["name"], edmunds_id: model["id"])
-      style_id = model["subModels"].first.last.first["styleIds"].max
-      get_image(style_id)
-      Image.create(link: @image, model_id: @model.id)
-      model["modelYears"].each do |submodel|
-        @model.model_years.create(year: submodel["year"], edmunds_id: submodel["id"])
+      @model = Model.new(name: model["name"], edmunds_id: model["id"], make_id: @make.id)
+      if @model.save
+        style_id = model["subModels"].first.last.first["styleIds"].max
+        get_image(style_id)
+        Image.create(link: @image, model_id: @model.id)
+        model["modelYears"].each do |submodel|
+          @model.model_years.create(year: submodel["year"], edmunds_id: submodel["id"])
+        end
       end
     end
     return @make.models.sort{|a,b| a.name <=> b.name }
@@ -97,6 +100,10 @@ class EdmundsAPI
   end
 
   def get_model_years(model_id)
+    @model = Model.find_by_edmumds_id(model_id)
+    @model.model_years.first.year
+    @model_years = @model.model_years{|a,b| b[:year] <=> a[:year] }
+  rescue
     @model_id = model_id
     @url = "/vehicle/modelrepository/findbyid?id=#{@model_id}&fmt=json&api_key=#{@api_key}"
     call_api
@@ -107,9 +114,9 @@ class EdmundsAPI
       @url = "/vehicle/stylerepository/findstylesbymodelyearid?modelyearid=#{@model_year}&fmt=json&api_key=#{@api_key}"
       call_api
       get_image(@json["styleHolder"].first["id"])
-      @model_years.push(year: model_year["year"], id: model_year["id"], image: @image, name: "#{models.first["makeName"]} #{models.first["name"]}")
+      @model.model_years.create(year:model_year["year"], id: model_year["id"], image: @image )
     end
-    return @model_years.sort{|a,b| b[:year] <=> a[:year] }
+    return @model.model_years.sort{|a,b| b[:year] <=> a[:year] }
   end
 
   def get_trims(model_year_id)

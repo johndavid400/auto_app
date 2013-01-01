@@ -13,11 +13,19 @@
             });
           });
       %p
-      - new_model_search(make.edmunds_id).each do |model|
-        = link_to image_tag(model.sample_image, size: "200x200"), model_years_path(model: model[:edmunds_id], name: model[:name])
-        %p
-        = model.name
-        %p
+      - make.get_models.each do |model|
+        %div{:id => "model_#{model.id}"}
+          = link_to image_tag(model.sample_image, size: "200x200"), model_years_path(model: model[:edmunds_id], name: model[:name])
+          %p
+          .inline= model.name
+          = link_to "   (x)", "#", :class => "inline", :id => "click_model_#{model.id}"
+          %p
+          :javascript
+            $(function() {
+              $('#click_model_#{model.id}').click(function() {
+                $('#model_#{model.id}').hide();     
+              });
+            });
 
 :javascript
   $(function() {

@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   before_filter :api
 
   def api
-    @api = EdmundsAPI.new
+    @api = EdmundsApi.new
   end
 
 end

@@ -1,5 +1,7 @@
 class Model < ActiveRecord::Base
-  attr_accessible :name, :edmunds_id
+  attr_accessible :name, :edmunds_id, :make_id
+
+  validates_uniqueness_of :edmunds_id, :name
 
   belongs_to :make
   has_one :image
