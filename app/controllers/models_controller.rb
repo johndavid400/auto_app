@@ -20,11 +20,12 @@ class ModelsController < ApplicationController
 
   def get_trims
     @model_id = params[:id]
-    @trims = Model.find(@model_id).trims
+    model_years
   end
 
   def model_years
-    @model_years = @api.get_model_years(params[:model])
+    @model_id = params[:model] unless @model_id
+    @model_years = @api.get_model_years(@model_id)
     @model = @model_years.first[:name]
   end
 end
