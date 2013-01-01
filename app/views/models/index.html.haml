@@ -4,22 +4,22 @@
   %tr
     %th Model
   - @models.each do |model|
-    %tr{:id => "model_#{model.id}"}
+    %tr{:id => "model_#{model.edmunds_id}"}
       %td= model.name
-    %tr{:id => "model_trims_#{model.id}"}
+    %tr{:id => "model_trims_#{model.edmunds_id}"}
       %td
-        %span{:id => "#{model.id}_trims"}
+        %span{:id => "#{model.edmunds_id}_trims"}
 
       :javascript
         $(function() {
-          $("#model_trims_" + "#{model.id}").hide(); 
-          $("#model_" + "#{model.id}").click(function(){
-            document.getElementById("#{model.id}_trims").innerHTML = "";
-            $("#model_trims_" + "#{model.id}").toggle(); 
+          $("#model_trims_" + "#{model.edmunds_id}").hide(); 
+          $("#model_" + "#{model.edmunds_id}").click(function(){
+            document.getElementById("#{model.edmunds_id}_trims").innerHTML = "";
+            $("#model_trims_" + "#{model.edmunds_id}").toggle(); 
             $.ajax({
               type: 'GET',
               dataType: 'script',
-              url: "/get_trims?id=#{model.id}"
+              url: "/get_trims?id=#{model.edmunds_id}"
             });
           });
         });

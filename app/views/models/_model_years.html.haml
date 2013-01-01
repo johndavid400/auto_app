@@ -1,0 +1,7 @@
+- @model_years.each do |s|
+  .model
+    %center
+      = link_to image_tag(s[:image], size: "300x300"), model_year_trims_path(id: s[:id])
+      %p
+      = s[:year]
+      %p
