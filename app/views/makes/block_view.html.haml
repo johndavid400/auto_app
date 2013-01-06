@@ -2,24 +2,24 @@
 
 .body_container
   - @new_makes.each do |make|
-    %div{:class => "block", :id => "#{make.edmunds_id}"}
+    .block
       %center
-        %h5.inline.text-info= make.name
-        = link_to "   (x)", "#", :class => "inline", :id => "click_#{make.edmunds_id}"
-        :javascript
-          $(function() {
-            $('#click_#{make.edmunds_id}').click(function() {
-              $('##{make.edmunds_id}').hide();     
-            });
-          });
+        %h4.inline.text-info= make.name
+        %span{:onclick => "remove(this.parentNode.parentNode)"} (x)
+
       %p
       - new_model_search(make.edmunds_id).each do |model|
-        = link_to image_tag(model.sample_image, size: "200x200"), model_years_path(model: model[:edmunds_id], name: model[:name])
-        %p
-        = model.name
-        %p
+        %span
+          = link_to image_tag(model.sample_image, size: "200x200"), model_years_path(model: model[:edmunds_id], name: model[:name])
+          %p
+          %h5.inline= model.name
+          %span{:onclick => "remove(this.parentNode)"} (x)
+          %p
 
 :javascript
+  function remove(model){
+    model.parentNode.removeChild(model);
+  }
   $(function() {
     var hoverElem = null;
     $('body').mousemove(function(e) {
