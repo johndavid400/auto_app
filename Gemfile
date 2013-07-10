@@ -10,9 +10,9 @@ gem 'rest-client'
 gem 'crack'
 
 group :assets do
-  gem 'therubyracer'
-  gem 'execjs'
-  gem 'libv8', '~> 3.11.8'
+#  gem 'therubyracer'
+#  gem 'execjs'
+#  gem 'libv8', '~> 3.11.8'
 
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
