@@ -3,11 +3,6 @@ class MakesController < ApplicationController
   def index
     @new_makes = @api.get_makes
     @makes = Make.all
-    if params["preference"] == "list"
-      render 'list_view'
-    else
-      render 'block_view'
-    end
   end
 
   def show
